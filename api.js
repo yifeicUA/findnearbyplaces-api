@@ -5,35 +5,54 @@ let search = (search_terms,user_location, radius_filter,maximum_results_to_retur
     return db.search(search_terms,user_location, radius_filter,maximum_results_to_return,category_filter,sort);
 }
 
-let checkScore = (quiztaker,quizid) => {
-    return db.checkScore(quiztaker,quizid);
+let setCustomer = (email,password) => {
+    return db.setCustomer(email,password);
 }
 
-let getAllCustomer= () =>{
-    return db.getAllCustomer();
+let storePlace = (name,category_id,latitude,longitude,description) => {
+    return db.storePlace(name,category_id,latitude,longitude,description);
 }
 
-
-let setCustomer = (name,email,password) => {
-    return db.setCustomer(name,email,password);
+let addPhoto = (photo,place_id,review_id) => {
+    return db.addPhoto(photo,place_id,review_id);
 }
 
-let checkCustomer = (email,password) => {
-    return db.checkCustomer(email,password);
+let addReview = (place_id,comment,rating) => {
+    return db.addReview(place_id,comment,rating);
 }
 
-
-let getFlowers = () => {
-    return db.getFlowers();
+let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
+    return db.updatePlace(place_id,name,category_id,latitude,longitude,description);
 }
 
-let getQuizs= () =>{
-    return db.getQuizs();
+let updateReview = (review_id,comment,rating) => {
+    return db.updateReview(review_id,comment,rating);
 }
 
-let getQuizById = (name) => {
-    return db.getQuizById(name);
+let updatePhoto = (photo_id,photo) => {
+    return db.updatePhoto(photo_id,photo);
 }
 
+let delatePlace = (place_id) => {
+    return db.delatePlace(place_id);
+}
+
+let delateReview = (review_id) => {
+    return db.delateReview(review_id);
+}
+
+let delatePhoto = (photo_id) => {
+    return db.delatePhoto(photo_id);
+}
 
 exports.search = search;
+exports.setCustomer = setCustomer;
+exports.storePlace = storePlace;
+exports.addPhoto = addPhoto;
+exports.addReview = addReview;
+exports.updatePlace = updatePlace;
+exports.updateReview = updateReview;
+exports.updatePhoto = updatePhoto;
+exports.delatePlace = delatePlace;
+exports.delateReview = delateReview;
+exports.delatePhoto = delatePhoto;

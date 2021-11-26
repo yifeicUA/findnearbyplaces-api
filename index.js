@@ -51,11 +51,11 @@ application.get('/search', (request, response) =>{
 application.post('/customer', (request, response) =>{
     let email = request.body.email;
     let password = request.body.password;
-    if(api.checkCustomer(email,password)==0){
+    if(api.setCustomer(email,password)==0){
         response.sendStatus(403);
     }
     else{
-        let sum = api.addCustomer(email,password);
+        let sum = api.setCustomer(email,password);
         response.sendStatus(200);
         //response.send(JSON.stringify(`customer added ${name}`));
         //response.send(JSON.stringify(`customer added ${name}`));
@@ -73,7 +73,7 @@ application.post('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    if(api.checkPlace(name,category_id,latitude,longitude,description)==1){
+    if(api.storePlace(name,category_id,latitude,longitude,description)==1){
         response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
     }
     else{
@@ -90,7 +90,7 @@ application.post('/photo', (request, response) =>{
     let photo = request.body.photo;
     let place_id = request.body.place_id;
     let review_id = request.body.review_id;
-    if(api.checkPlace(photo,place_id,review_id)==1){
+    if(api.addPhoto(photo,place_id,review_id)==1){
         response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
     }
     else{
@@ -106,7 +106,7 @@ application.post('/review', (request, response) =>{
     let place_id = request.body.place_id;
     let comment = request.body.comment;
     let rating = request.body.rating;
-    if(api.checkPlace(place_id,comment,rating)==1){
+    if(api.addReview(place_id,comment,rating)==1){
         response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
     }
     else{
@@ -123,7 +123,7 @@ application.put('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    if(api.checkPlace(place_id,name,category_id,latitude,longitude,description)==1){
+    if(api.updatePlace(place_id,name,category_id,latitude,longitude,description)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
@@ -136,7 +136,7 @@ application.put('/review', (request, response) =>{
     let review_id = request.body.review_id;
     let comment = request.body.comment;
     let rating = request.body.rating;
-    if(api.checkPlace(review_id,comment,rating)==1){
+    if(api.updateReview(review_id,comment,rating)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
@@ -149,7 +149,7 @@ application.put('/review', (request, response) =>{
 application.put('/photo', (request, response) =>{
     let photo_id = request.body.photo_id;
     let photo = request.body.photo;
-    if(api.checkPlace(photo_id,photo)==1){
+    if(api.updatePhoto(photo_id,photo)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
@@ -160,7 +160,7 @@ application.put('/photo', (request, response) =>{
 //9. A DELETE method: place(place_id)
 application.delete('/place', (request, response) =>{
     let place_id = request.body.place_id;
-    if(api.checkPlace(place_id)==1){
+    if(api.delatePlace(place_id)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
@@ -169,9 +169,9 @@ application.delete('/place', (request, response) =>{
 });
 
 //10. A DELETE method: review(review_id)
-application.delete('/photo', (request, response) =>{
+application.delete('/review', (request, response) =>{
     let review_id = request.body.review_id;
-    if(api.checkPlace(review_id)==1){
+    if(api.delateReview(review_id)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
@@ -182,7 +182,7 @@ application.delete('/photo', (request, response) =>{
 //11. A DELETE method: photo(photo_id)
 application.delete('/photo', (request, response) =>{
     let photo_id = request.body.photo_id;
-    if(api.checkPlace(photo_id)==1){
+    if(api.delatePhoto(photo_id)==1){
         response.send(JSON. stringify({"done":true,"message":"customer exist"}));
     }
     else{
