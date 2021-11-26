@@ -3,17 +3,7 @@
 create schema if not exists findnearbyplaces;
 
 
-drop table if exists findnearbyplaces.place cascade;
-create table findnearbyplaces.place
-(
-	id bigserial primary key,
-	name text not null unique,
-	latitude text not null,
-    longitude text not null,
-    description text not null,
-    category_id int primary key references findnearbyplaces.category(id),
-    customer_id int primary key references findnearbyplaces.customer(id)
-);
+
 
 
 
@@ -35,14 +25,25 @@ create table findnearbyplaces.customer
 
 
 
-insert into findnearbyplaces.customer (name,email,password)
+insert into findnearbyplaces.customer (email,password)
 values('napicchen@gmail.com','123');
 
+drop table if exists findnearbyplaces.place cascade;
+create table findnearbyplaces.place
+(
+	id bigserial primary key,
+	name text not null unique,
+	latitude text not null,
+    longitude text not null,
+    description text not null,
+    category_id int not null references findnearbyplaces.category(id),
+    customer_id int not null references findnearbyplaces.customer(id)
+);
 
 drop table if exists findnearbyplaces.reviews cascade;
 create table findnearbyplaces.reviews
 (
-	location_id int primary key references findnearbyplaces.place(id),
+	location_id int not null references findnearbyplaces.place(id),
 	customer_id int not null references findnearbyplaces.customer(id),
 	id bigserial primary key,
 	text text not null,

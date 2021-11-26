@@ -1,5 +1,5 @@
 
-//const api = require('./api');
+const api = require('./api');
 //const sql_api = require('./sql_api');
 const cors = require('cors');
 const express = require('express');      
@@ -25,6 +25,173 @@ application.get('/add2/:n/:m', (request, response) =>{
     let sum = api.add(n,m);
     response.send(`${n} + ${m} = ${sum}`);
 });
+
+//1. A GET method: search(search_terms, user_location, radius_filter, max imum_results_to_return, category_filter, sort)
+application.get('/search', (request, response) =>{
+    let search_terms = request.body.search_terms;
+    let user_location = request.body.user_location;
+    let radius_filter = request.body.radius_filter;
+    let maximum_results_to_return = request.body.maximum_results_to_return;
+    let category_filter = request.body.category_filter;
+    let sort = request.body.sort;
+    if(api.search(search_terms,user_location,radius_filter,maximum_results_to_return,category_filter,sort)==0){
+        response.sendStatus(403);
+    }
+    else{
+        api.search(search_terms,user_location,radius_filter,maximum_results_to_return,category_filter,sort);
+        response.sendStatus(200);
+        //response.send(JSON.stringify(`customer added ${name}`));
+        //response.send(JSON.stringify(`customer added ${name}`));
+    }
+});
+
+
+
+//2. A POST method: customer(email, password)
+application.post('/customer', (request, response) =>{
+    let email = request.body.email;
+    let password = request.body.password;
+    if(api.checkCustomer(email,password)==0){
+        response.sendStatus(403);
+    }
+    else{
+        let sum = api.addCustomer(email,password);
+        response.sendStatus(200);
+        //response.send(JSON.stringify(`customer added ${name}`));
+        //response.send(JSON.stringify(`customer added ${name}`));
+    }
+});
+
+
+
+
+
+//3. A POST method: place(name, category_id, latitude, longitude, description)
+application.post('/place', (request, response) =>{
+    let name = request.body.name;
+    let category_id = request.body.category_id;
+    let latitude = request.body.latitude;
+    let longitude = request.body.longitude;
+    let description = request.body.description;
+    if(api.checkPlace(name,category_id,latitude,longitude,description)==1){
+        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
+    }
+});
+
+
+
+
+
+//4. A POST method: photo(photo, place_id, review_id)
+application.post('/photo', (request, response) =>{
+    let photo = request.body.photo;
+    let place_id = request.body.place_id;
+    let review_id = request.body.review_id;
+    if(api.checkPlace(photo,place_id,review_id)==1){
+        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
+    }
+});
+
+
+
+
+//5. A POST method: review(place_id, comment, rating)
+application.post('/review', (request, response) =>{
+    let place_id = request.body.place_id;
+    let comment = request.body.comment;
+    let rating = request.body.rating;
+    if(api.checkPlace(place_id,comment,rating)==1){
+        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
+    }
+});
+
+
+//6. A Put method: place(place_id, name, category_id, latitude, longitude, description)
+application.put('/place', (request, response) =>{
+    let place_id = request.body.place_id;
+    let name = request.body.name;
+    let category_id = request.body.category_id;
+    let latitude = request.body.latitude;
+    let longitude = request.body.longitude;
+    let description = request.body.description;
+    if(api.checkPlace(place_id,name,category_id,latitude,longitude,description)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+//7. A PUT method: review(review_id, comment, rating)
+application.put('/review', (request, response) =>{
+    let review_id = request.body.review_id;
+    let comment = request.body.comment;
+    let rating = request.body.rating;
+    if(api.checkPlace(review_id,comment,rating)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+
+//8. A PUT method: photo(photo_id, photo)
+application.put('/photo', (request, response) =>{
+    let photo_id = request.body.photo_id;
+    let photo = request.body.photo;
+    if(api.checkPlace(photo_id,photo)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+//9. A DELETE method: place(place_id)
+application.delete('/place', (request, response) =>{
+    let place_id = request.body.place_id;
+    if(api.checkPlace(place_id)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+//10. A DELETE method: review(review_id)
+application.delete('/photo', (request, response) =>{
+    let review_id = request.body.review_id;
+    if(api.checkPlace(review_id)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+//11. A DELETE method: photo(photo_id)
+application.delete('/photo', (request, response) =>{
+    let photo_id = request.body.photo_id;
+    if(api.checkPlace(photo_id)==1){
+        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
+    }
+});
+
+
+
 /*
 application.post('/register', (request, response) =>{
     let name = request.body.name;
