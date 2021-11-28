@@ -9,18 +9,24 @@ const connection={
 }
 const pool = new Pool(connection);
 
+//get method
+
 let search = (search_terms,user_location, radius_filter,maximum_results_to_return,category_filter,sort) => {
     let sql = '';
     //let distance = Math.sqrt(Math.pow(pos.latitude - pos2.latitude, 2) + Math.pow(pos.longitude - pos2.longitude, 2));
     //sql +=`select latitude,longitude from findnearbyplaces.place where name = ${user_location}`
-    sql +=`select * from findnearbyplaces.place where name like ${search_terms}`
+    sql +=`select * from findnearbyplaces.place where name like ${search_terms}`;
     if(radius_filter!=null){
-        sql+=` and sqrt(square(latitude - (select latitude from findnearbyplaces.place where name = ${user_location})) + square(longitude - (select longitude from findnearbyplaces.place where name = ${user_location}))) <= ${radius_filter}`
+        sql+=` and sqrt(square(latitude - (select latitude from findnearbyplaces.place where name = ${user_location})) 
+        + square(longitude - (select longitude from findnearbyplaces.place where name = ${user_location}))) <= ${radius_filter}`;
     }
-    if(category_filter!=null)sql +=` and category_id = (select id from findnearbyplaces.category where name = ${category_filter})`
-    if(maximum_results_to_return!=null)sql +=` limit ${maximum_results_to_return},`
+    if(category_filter!=null)sql +=` and category_id = (select id from findnearbyplaces.category where name = ${category_filter})`;
+    if(maximum_results_to_return!=null)sql +=` limit ${maximum_results_to_return},`;
     return pool.query(sql);
 }
+
+
+//add method
 
 let setCustomer = (email,password) => {
     const salt = bcrypt.genSaltSync(10);
@@ -45,6 +51,8 @@ let addReview = (place_id,comment,rating) => {
     [place_id,comment,rating]);
 }
 
+//update method
+
 let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
     let sql = '';
     if(name!=null)sql += `update findnearbyplaces.place set name=${name} where place_id=${place_id};`;
@@ -68,6 +76,8 @@ let updatePhoto = (photo_id,photo) => {
     return pool.query(sql);
 }
 
+
+//delete method
 let delatePlace = (place_id) => {
     return pool.query('delete from findnearbyplaces.place where place_id=$1',
     [place_id]);
