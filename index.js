@@ -73,12 +73,15 @@ application.post('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    if(api.addPlace(name,category_id,latitude,longitude,description)==1){
-        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
-    }
+    return api.addPlace(name,category_id,latitude,longitude,description)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"place added successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add place"}));
+    })
 });
 
 
@@ -90,12 +93,15 @@ application.post('/photo', (request, response) =>{
     let photo = request.body.photo;
     let place_id = request.body.place_id;
     let review_id = request.body.review_id;
-    if(api.addPhoto(photo,place_id,review_id)==1){
-        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
-    }
+    return api.addPhoto(photo,place_id,review_id)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"photo added successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add photo"}));
+    })
 });
 
 
@@ -106,12 +112,15 @@ application.post('/review', (request, response) =>{
     let place_id = request.body.place_id;
     let comment = request.body.comment;
     let rating = request.body.rating;
-    if(api.addReview(place_id,comment,rating)==1){
-        response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"id":id,"message":"customer not exist"}));
-    }
+    return api.addReview(place_id,comment,rating)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"review added successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add review"}));
+    })
 });
 
 
@@ -123,12 +132,15 @@ application.put('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    if(api.updatePlace(place_id,name,category_id,latitude,longitude,description)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.updatePlace(place_id,name,category_id,latitude,longitude,description)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"place updated successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to update place"}));
+    })
 });
 
 //7. A PUT method: review(review_id, comment, rating)
@@ -136,12 +148,15 @@ application.put('/review', (request, response) =>{
     let review_id = request.body.review_id;
     let comment = request.body.comment;
     let rating = request.body.rating;
-    if(api.updateReview(review_id,comment,rating)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.updateReview(review_id,comment,rating)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"review updated successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to update review"}));
+    })
 });
 
 
@@ -149,45 +164,57 @@ application.put('/review', (request, response) =>{
 application.put('/photo', (request, response) =>{
     let photo_id = request.body.photo_id;
     let photo = request.body.photo;
-    if(api.updatePhoto(photo_id,photo)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.updatePhoto(photo_id,photo)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"photo updated successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to update photo"}));
+    })
 });
 
 //9. A DELETE method: place(place_id)
 application.delete('/place', (request, response) =>{
     let place_id = request.body.place_id;
-    if(api.delatePlace(place_id)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.delatePlace(place_id)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"place delete successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to delete place"}));
+    })
 });
 
 //10. A DELETE method: review(review_id)
 application.delete('/review', (request, response) =>{
     let review_id = request.body.review_id;
-    if(api.delateReview(review_id)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.delateReview(review_id)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"review delete successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to delete review"}));
+    })
 });
 
 //11. A DELETE method: photo(photo_id)
 application.delete('/photo', (request, response) =>{
     let photo_id = request.body.photo_id;
-    if(api.delatePhoto(photo_id)==1){
-        response.send(JSON. stringify({"done":true,"message":"customer exist"}));
-    }
-    else{
-        response.send(JSON. stringify({"done":false,"message":"customer not exist"}));
-    }
+    return api.delatePhoto(photo_id)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"photo delete successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"faild to delete photo"}));
+    })
 });
 
 

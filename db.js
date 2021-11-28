@@ -42,8 +42,8 @@ let addPlace = (name,category_id,latitude,longitude,description) => {
 
 let addPhoto = (photo,place_id,review_id) => {
     pool.query(`insert into findnearbyplaces.photo(file) values (${photo})`);
-    if(place_id!=null)pool.query(`insert into findnearbyplaces.place_photo(location_id,photo_id) values (${place_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
-    else if(review_id!=null)pool.query(`insert into findnearbyplaces.review_photo(review_id,photo_id) values (${review_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
+    if(place_id!=null)return pool.query(`insert into findnearbyplaces.place_photo(location_id,photo_id) values (${place_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
+    else if(review_id!=null)return pool.query(`insert into findnearbyplaces.review_photo(review_id,photo_id) values (${review_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
 }
 
 let addReview = (place_id,comment,rating) => {
