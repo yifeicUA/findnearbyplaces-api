@@ -2,9 +2,7 @@
 const bcrypt = require('bcrypt');
 const {Pool} = require('pg'); 
 require('dotenv').config();
-//const connectionString = `postgres://:@:5432/d8gceaqrtfr7m5`;
 const connectionString = `postgres://rrdzfiasjwpwvp:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`;
-//postgres://rrdzfiasjwpwvp:67611b8b460f5c7161d94020b0e032757ced82ebca0d55115d0357bec2996163@ec2-54-225-46-224.compute-1.amazonaws.com:5432/db0lqs9mmfi2db
 const connection={
     connectionString: process.env.DATABASE_URL ? process.env.DATABASE_URL: connectionString,
     ssl: {rejectUnauthorized: false}
@@ -12,47 +10,71 @@ const connection={
 const pool = new Pool(connection);
 
 let search = (search_terms,user_location, radius_filter,maximum_results_to_return,category_filter,sort) => {
-
+    let sql = '';
+    let distance = Math.sqrt(Math.pow(pos.latitude - pos2.latitude, 2) + Math.pow(pos.longitude - pos2.longitude, 2));
+    sql +=`select latitude,longitude from findnearbyplaces.place where name = ${user_location}`
+    sql +=`select * from findnearbyplaces.place where name like ${search_terms}`
+    if(maximum_results_to_return!=null)sql +=`limit ${maximum_results_to_return}`
 }
 
 let setCustomer = (email,password) => {
-
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt);
+    return pool.query('insert into findnearbyplaces.customer(email,password) values ($1,$2)',
+    [email.toLowerCase(),hashPassword]);
 }
 
 let storePlace = (name,category_id,latitude,longitude,description) => {
-
+    return pool.query('insert into findnearbyplaces.place(name,category_id,latitude,longitude,description) values ($1,$2,$3,$4,$5)',
+    [name,category_id,latitude,longitude,description]);
 }
 
 let addPhoto = (photo,place_id,review_id) => {
-
+    return pool.query('insert into findnearbyplaces.photo(photo,place_id,review_id) values ($1,$2,$3)',
+    [photo,place_id,review_id]);
 }
 
 let addReview = (place_id,comment,rating) => {
-
+    return pool.query('insert into findnearbyplaces.reviews(place_id,comment,rating) values ($1,$2,$3)',
+    [place_id,comment,rating]);
 }
 
 let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
-
+    let sql = '';
+    if(name!=null)sql += `update findnearbyplaces.place set name=${name} where place_id=${place_id};`;
+    if(category_id!=null)sql += `update findnearbyplaces.place set category_id=${category_id} where place_id=${place_id};`;
+    if(latitude!=null)sql += `update findnearbyplaces.place set latitude=${latitude} where place_id=${place_id};`;
+    if(longitude!=null)sql += `update findnearbyplaces.place set longitude=${longitude} where place_id=${place_id};`;
+    if(description!=null)sql += `update findnearbyplaces.place set description=${description} where place_id=${place_id};`;
+    return pool.query(sql);
 }
 
 let updateReview = (review_id,comment,rating) => {
-
+    let sql = '';
+    if(comment!=null)sql += `update findnearbyplaces.reviews set comment=${comment} where review_id=${review_id};`;
+    if(rating!=null)sql += `update findnearbyplaces.reviews set rating=${rating} where review_id=${review_id};`;
+    return pool.query(sql);
 }
 
 let updatePhoto = (photo_id,photo) => {
-
+    let sql = '';
+    if(photo!=null)sql += `update findnearbyplaces.photo set photo=${photo} where review_id=${photo_id};`;
+    return pool.query(sql);
 }
 
 let delatePlace = (place_id) => {
-
+    return pool.query('delete from findnearbyplaces.place where place_id=$1',
+    [place_id]);
 }
 
 let delateReview = (review_id) => {
-
+    return pool.query('delete from findnearbyplaces.reviews where review_id=$1',
+    [review_id]);
 }
 
 let delatePhoto = (photo_id) => {
-
+    return pool.query('delete from findnearbyplaces.place where photo_id=$1',
+    [photo_id]);
 }
 
 exports.search = search;
