@@ -11,10 +11,15 @@ const pool = new Pool(connection);
 
 let search = (search_terms,user_location, radius_filter,maximum_results_to_return,category_filter,sort) => {
     let sql = '';
-    let distance = Math.sqrt(Math.pow(pos.latitude - pos2.latitude, 2) + Math.pow(pos.longitude - pos2.longitude, 2));
-    sql +=`select latitude,longitude from findnearbyplaces.place where name = ${user_location}`
+    //let distance = Math.sqrt(Math.pow(pos.latitude - pos2.latitude, 2) + Math.pow(pos.longitude - pos2.longitude, 2));
+    //sql +=`select latitude,longitude from findnearbyplaces.place where name = ${user_location}`
     sql +=`select * from findnearbyplaces.place where name like ${search_terms}`
-    if(maximum_results_to_return!=null)sql +=`limit ${maximum_results_to_return}`
+    if(radius_filter!=null){
+        sql+=` and sqrt(square(latitude - (select latitude from findnearbyplaces.place where name = ${user_location})) + square(longitude - (select longitude from findnearbyplaces.place where name = ${user_location}))) <= ${radius_filter}`
+    }
+    if(category_filter!=null)sql +=` and category_id = (select id from findnearbyplaces.category where name = ${category_filter})`
+    if(maximum_results_to_return!=null)sql +=` limit ${maximum_results_to_return},`
+    return pool.query(sql);
 }
 
 let setCustomer = (email,password) => {
@@ -30,8 +35,9 @@ let storePlace = (name,category_id,latitude,longitude,description) => {
 }
 
 let addPhoto = (photo,place_id,review_id) => {
-    return pool.query('insert into findnearbyplaces.photo(photo,place_id,review_id) values ($1,$2,$3)',
-    [photo,place_id,review_id]);
+    pool.query(`insert into findnearbyplaces.photo(file) values (${photo})`);
+    if(place_id!=null)pool.query(`insert into findnearbyplaces.place_photo(location_id,photo_id) values (${place_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
+    else if(review_id!=null)pool.query(`insert into findnearbyplaces.review_photo(review_id,photo_id) values (${review_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
 }
 
 let addReview = (place_id,comment,rating) => {

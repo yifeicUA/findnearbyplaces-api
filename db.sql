@@ -61,7 +61,7 @@ create table findnearbyplaces.photo
 drop table if exists findnearbyplaces.place_photo cascade;
 create table findnearbyplaces.place_photo
 (
-	category_id int not null references findnearbyplaces.category(id),
+	location_id int not null references findnearbyplaces.place(id),
     photo_id int not null references findnearbyplaces.photo(id)
 );
 
