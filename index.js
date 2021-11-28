@@ -34,15 +34,15 @@ application.get('/search', (request, response) =>{
     let maximum_results_to_return = request.body.maximum_results_to_return;
     let category_filter = request.body.category_filter;
     let sort = request.body.sort;
-    if(api.search(search_terms,user_location,radius_filter,maximum_results_to_return,category_filter,sort)==0){
-        response.sendStatus(403);
-    }
-    else{
-        api.search(search_terms,user_location,radius_filter,maximum_results_to_return,category_filter,sort);
-        response.sendStatus(200);
-        //response.send(JSON.stringify(`customer added ${name}`));
-        //response.send(JSON.stringify(`customer added ${name}`));
-    }
+    return api.search(search_terms,user_location,radius_filter,maximum_results_to_return,category_filter,sort)
+    .then(x => {
+        console.log(x);
+        response.json(x);
+    })
+    .catch(e => {
+        console.log(e);
+        response.json({message: 'faild to search: '+e});
+    })
 });
 
 
@@ -51,15 +51,15 @@ application.get('/search', (request, response) =>{
 application.post('/customer', (request, response) =>{
     let email = request.body.email;
     let password = request.body.password;
-    if(api.setCustomer(email,password)==0){
-        response.sendStatus(403);
-    }
-    else{
-        let sum = api.setCustomer(email,password);
-        response.sendStatus(200);
-        //response.send(JSON.stringify(`customer added ${name}`));
-        //response.send(JSON.stringify(`customer added ${name}`));
-    }
+    return api.setCustomer(email,password)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"message":"customer added successfully"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"message":"customer failed to add"}));
+    })
 });
 
 
@@ -73,7 +73,7 @@ application.post('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    if(api.storePlace(name,category_id,latitude,longitude,description)==1){
+    if(api.addPlace(name,category_id,latitude,longitude,description)==1){
         response.send(JSON. stringify({"done":true,"id":id,"message":"customer exist"}));
     }
     else{

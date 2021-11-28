@@ -9,8 +9,8 @@ let setCustomer = (email,password) => {
     return db.setCustomer(email,password);
 }
 
-let storePlace = (name,category_id,latitude,longitude,description) => {
-    return db.storePlace(name,category_id,latitude,longitude,description);
+let addPlace = (name,category_id,latitude,longitude,description) => {
+    return db.addPlace(name,category_id,latitude,longitude,description);
 }
 
 let addPhoto = (photo,place_id,review_id) => {
@@ -47,7 +47,7 @@ let delatePhoto = (photo_id) => {
 
 exports.search = search;
 exports.setCustomer = setCustomer;
-exports.storePlace = storePlace;
+exports.addPlace = addPlace;
 exports.addPhoto = addPhoto;
 exports.addReview = addReview;
 exports.updatePlace = updatePlace;

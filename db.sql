@@ -1,11 +1,4 @@
-
-
 create schema if not exists findnearbyplaces;
-
-
-
-
-
 
 drop table if exists findnearbyplaces.category cascade;
 create table findnearbyplaces.category
@@ -22,8 +15,6 @@ create table findnearbyplaces.customer
 	email text not null unique,
 	password text not null
 );
-
-
 
 insert into findnearbyplaces.customer (email,password)
 values('napicchen@gmail.com','123');

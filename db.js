@@ -35,7 +35,7 @@ let setCustomer = (email,password) => {
     [email.toLowerCase(),hashPassword]);
 }
 
-let storePlace = (name,category_id,latitude,longitude,description) => {
+let addPlace = (name,category_id,latitude,longitude,description) => {
     return pool.query('insert into findnearbyplaces.place(name,category_id,latitude,longitude,description) values ($1,$2,$3,$4,$5)',
     [name,category_id,latitude,longitude,description]);
 }
@@ -78,6 +78,7 @@ let updatePhoto = (photo_id,photo) => {
 
 
 //delete method
+
 let delatePlace = (place_id) => {
     return pool.query('delete from findnearbyplaces.place where place_id=$1',
     [place_id]);
@@ -95,7 +96,7 @@ let delatePhoto = (photo_id) => {
 
 exports.search = search;
 exports.setCustomer = setCustomer;
-exports.storePlace = storePlace;
+exports.addPlace = addPlace;
 exports.addPhoto = addPhoto;
 exports.addReview = addReview;
 exports.updatePlace = updatePlace;
