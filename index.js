@@ -256,8 +256,9 @@ application.put('/photo', (request, response) =>{
 });
 
 //9. A DELETE method: place(place_id)
-application.delete('/place', (request, response) =>{
-    let place_id = request.body.place_id;
+application.delete('/place/:place_id', (request, response) =>{
+    let place_id = Number(request.params.place_id);
+    //let place_id = request.body.place_id;
     return api.delatePlace(place_id)
     .then(x => {
         //console.log(x);
@@ -270,8 +271,9 @@ application.delete('/place', (request, response) =>{
 });
 
 //10. A DELETE method: review(review_id)
-application.delete('/review', (request, response) =>{
-    let review_id = request.body.review_id;
+application.delete('/review/:review_id', (request, response) =>{
+    let review_id = Number(request.params.review_id);
+    //let review_id = request.body.review_id;
     return api.delateReview(review_id)
     .then(x => {
         //console.log(x);
@@ -284,8 +286,9 @@ application.delete('/review', (request, response) =>{
 });
 
 //11. A DELETE method: photo(photo_id)
-application.delete('/photo', (request, response) =>{
-    let photo_id = request.body.photo_id;
+application.delete('/photo/:photo_id', (request, response) =>{
+    let photo_id = Number(request.params.photo_id);
+    //let photo_id = request.body.photo_id;
     return api.delatePhoto(photo_id)
     .then(x => {
         //console.log(x);
