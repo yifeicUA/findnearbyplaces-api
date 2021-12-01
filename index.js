@@ -212,7 +212,14 @@ application.put('/place', (request, response) =>{
     let latitude = request.body.latitude;
     let longitude = request.body.longitude;
     let description = request.body.description;
-    return api.updatePlace(place_id,name,category_id,latitude,longitude,description)
+    //return api.updatePlace(place_id,name,category_id,latitude,longitude,description)
+    if(api.updatePlace(place_id,name,category_id,latitude,longitude,description)==0){
+        response.send(JSON. stringify({"done":true,"message":"place updated successful"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"failed to update place"}));
+    }
+    /*
     .then(x => {
         //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"place updated successful"}));
@@ -221,6 +228,7 @@ application.put('/place', (request, response) =>{
         //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"failed to update place"+e}));
     })
+    */
 });
 
 //7. A PUT method: review(review_id, comment, rating)
