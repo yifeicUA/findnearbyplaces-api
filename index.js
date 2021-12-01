@@ -142,7 +142,7 @@ application.post('/place', (request, response) =>{
     return api.addPlace(name,category_id,latitude,longitude,description)
     .then(x => {
         //console.log(x);
-        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"place added successful"}));
+        response.send(JSON. stringify({"done":true,"id": x,"message":"place added successful"}));
     })
     .catch(e => {
         //console.log(e);

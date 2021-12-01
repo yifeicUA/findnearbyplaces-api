@@ -38,7 +38,19 @@ let setCustomer = (email,password) => {
 
 let addPlace = (name,category_id,latitude,longitude,description) => {
     return pool.query('insert into findnearbyplaces.place(name,latitude,longitude,description,category_id,customer_id) values ($1,$2,$3,$4,$5,$6)',
-    [name,latitude,longitude,description,category_id,1]);
+    [name,latitude,longitude,description,category_id,1])
+    .then(x => {
+        return pool.query(`select id from findnearbyplaces.place where name = $1`,[name])
+        .then(x => {
+            console.log(x.rows[0].id);
+            return x.rows[0].id;
+        })
+        
+        //response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
+    })
+    .catch(e => {
+        return e;
+    })
 }
 
 let addPhoto = (photo,place_id,review_id) => {
