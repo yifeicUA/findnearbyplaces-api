@@ -95,11 +95,11 @@ let addReview = (place_id,comment,rating) => {
 
 let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
     let sql = '';
-    if(name!=undefined)sql += `update findnearbyplaces.place set name=${name} where place_id=${place_id};`;
-    if(category_id!=undefined)sql += `update findnearbyplaces.place set category_id=${category_id} where place_id=${place_id};`;
-    if(latitude!=undefined)sql += `update findnearbyplaces.place set latitude=${latitude} where place_id=${place_id};`;
-    if(longitude!=undefined)sql += `update findnearbyplaces.place set longitude=${longitude} where place_id=${place_id};`;
-    if(description!=undefined)sql += `update findnearbyplaces.place set description=${description} where place_id=${place_id};`;
+    if(name!="undefined")sql += `update findnearbyplaces.place set name=${name} where place_id=${place_id};`;
+    if(category_id!="undefined")sql += `update findnearbyplaces.place set category_id=${category_id} where place_id=${place_id};`;
+    if(latitude!="undefined")sql += `update findnearbyplaces.place set latitude=${latitude} where place_id=${place_id};`;
+    if(longitude!="undefined")sql += `update findnearbyplaces.place set longitude=${longitude} where place_id=${place_id};`;
+    if(description!="undefined")sql += `update findnearbyplaces.place set description=${description} where place_id=${place_id};`;
     return pool.query(sql);
 }
 
