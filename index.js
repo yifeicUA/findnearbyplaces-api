@@ -176,7 +176,7 @@ application.post('/category', (request, response) =>{
     return api.addCategory(category)
     .then(x => {
         console.log(x);
-        return response.json({ done: true,id: x.rows[0].id, message: 'category added successful.' });
+        return response.json({ done: true,id: x, message: 'category added successful.' });
         //response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
     })
     .catch(e => {
