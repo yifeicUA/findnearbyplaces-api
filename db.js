@@ -120,17 +120,17 @@ let updatePhoto = (photo_id,photo) => {
 //delete method
 
 let delatePlace = (place_id) => {
-    return pool.query('delete from findnearbyplaces.place where place_id=$1',
+    return pool.query('delete from findnearbyplaces.place where id=$1',
     [place_id]);
 }
 
 let delateReview = (review_id) => {
-    return pool.query('delete from findnearbyplaces.reviews where review_id=$1',
+    return pool.query('delete from findnearbyplaces.reviews where id=$1',
     [review_id]);
 }
 
 let delatePhoto = (photo_id) => {
-    return pool.query('delete from findnearbyplaces.place where photo_id=$1',
+    return pool.query('delete from findnearbyplaces.photo where id=$1',
     [photo_id]);
 }
 
