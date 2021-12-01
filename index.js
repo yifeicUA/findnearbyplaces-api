@@ -219,7 +219,7 @@ application.put('/place', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to update place"}));
+        response.send(JSON. stringify({"done":false,"message":"faild to update place"+e}));
     })
 });
 
