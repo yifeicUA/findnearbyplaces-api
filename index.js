@@ -146,7 +146,7 @@ application.post('/place', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add place"}));
+        response.send(JSON. stringify({"done":false,"id":null,"message":"failed to add place"}));
     })
 });
 
@@ -167,7 +167,7 @@ application.post('/photo', (request, response) =>{
     .catch(e => {
         //console.log(e);
         //return response.json({ done: true, message: 'The customer logged in.' });
-        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add photo"}));
+        response.send(JSON. stringify({"done":false,"id":null,"message":"failed to add photo"}));
     })
 });
 
@@ -182,7 +182,7 @@ application.post('/category', (request, response) =>{
     .catch(e => {
         console.log(e);
         //response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add category"}));
-        return response.json({ done: false,id: null, message: 'faild to add category' });
+        return response.json({ done: false,id: null, message: 'failed to add category' });
     })
 });
 
@@ -199,7 +199,7 @@ application.post('/review', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add review"}));
+        response.send(JSON. stringify({"done":false,"id":null,"message":"failed to add review"}));
     })
 });
 
@@ -219,7 +219,7 @@ application.put('/place', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to update place"+e}));
+        response.send(JSON. stringify({"done":false,"message":"failed to update place"+e}));
     })
 });
 
@@ -235,7 +235,7 @@ application.put('/review', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to update review"}));
+        response.send(JSON. stringify({"done":false,"message":"failed to update review"}));
     })
 });
 
@@ -251,7 +251,7 @@ application.put('/photo', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to update photo"}));
+        response.send(JSON. stringify({"done":false,"message":"failed to update photo"}));
     })
 });
 
@@ -266,7 +266,7 @@ application.delete('/place/:place_id', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to delete place for"+place_id+" that "+e}));
+        response.send(JSON. stringify({"done":false,"message":"failed to delete place for"+place_id+" that "+e}));
     })
 });
 
@@ -281,7 +281,7 @@ application.delete('/review/:review_id', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to delete review"}));
+        response.send(JSON. stringify({"done":false,"message":"failed to delete review"}));
     })
 });
 

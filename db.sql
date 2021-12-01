@@ -27,8 +27,8 @@ create table findnearbyplaces.place
 	latitude numeric not null,
     longitude numeric not null,
     description text not null,
-    category_id int not null references findnearbyplaces.category(id),
-    customer_id int not null references findnearbyplaces.customer(id)
+    category_id int not null references findnearbyplaces.category(id) on delete cascade,
+    customer_id int not null references findnearbyplaces.customer(id) on delete cascade
 );
 
 drop table if exists findnearbyplaces.reviews cascade;

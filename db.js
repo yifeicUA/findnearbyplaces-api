@@ -120,7 +120,7 @@ let updatePhoto = (photo_id,photo) => {
 //delete method
 
 let delatePlace = (place_id) => {
-    return pool.query('delete from findnearbyplaces.place where id = $1 CASCADE',
+    return pool.query('delete from findnearbyplaces.place where id = $1',
     [place_id]);
 }
 
