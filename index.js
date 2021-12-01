@@ -266,7 +266,7 @@ application.delete('/place/:place_id', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"faild to delete place"+e}));
+        response.send(JSON. stringify({"done":false,"message":"faild to delete place for"+place_id+" that "+e}));
     })
 });
 
