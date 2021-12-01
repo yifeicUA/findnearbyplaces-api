@@ -24,8 +24,8 @@ create table findnearbyplaces.place
 (
 	id bigserial primary key,
 	name text not null unique,
-	latitude int not null,
-    longitude int not null,
+	latitude numeric not null,
+    longitude numeric not null,
     description text not null,
     category_id int not null references findnearbyplaces.category(id),
     customer_id int not null references findnearbyplaces.customer(id)

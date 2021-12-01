@@ -141,7 +141,7 @@ application.post('/place', (request, response) =>{
     let description = request.body.description;
     return api.addPlace(name,category_id,latitude,longitude,description)
     .then(x => {
-        //console.log(x);
+        //console.log(request.user);
         response.send(JSON. stringify({"done":true,"id": x,"message":"place added successful"}));
     })
     .catch(e => {
@@ -195,7 +195,7 @@ application.post('/review', (request, response) =>{
     return api.addReview(place_id,comment,rating)
     .then(x => {
         //console.log(x);
-        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"review added successful"}));
+        response.send(JSON. stringify({"done":true,"id": x,"message":"review added successful"}));
     })
     .catch(e => {
         //console.log(e);

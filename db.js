@@ -40,7 +40,7 @@ let addPlace = (name,category_id,latitude,longitude,description) => {
     return pool.query('insert into findnearbyplaces.place(name,latitude,longitude,description,category_id,customer_id) values ($1,$2,$3,$4,$5,$6)',
     [name,latitude,longitude,description,category_id,1])
     .then(x => {
-        return pool.query(`select id from findnearbyplaces.place where name = $1`,[name])
+        return pool.query(`select id from findnearbyplaces.place where name = $1 and latitude = $2 and longitude = $3`,[name,latitude,longitude])
         .then(x => {
             console.log(x.rows[0].id);
             return x.rows[0].id;
@@ -76,7 +76,19 @@ let addCategory = (category) => {
 }
 let addReview = (place_id,comment,rating) => {
     return pool.query('insert into findnearbyplaces.reviews(place_id,comment,rating) values ($1,$2,$3)',
-    [place_id,comment,rating]);
+    [place_id,comment,rating])
+    .then(x => {
+        return pool.query(`select id from findnearbyplaces.reviews where place_id = $1 and comment = $2 and rating = $3`,[place_id,comment,rating])
+        .then(x => {
+            console.log(x.rows[0].id);
+            return x.rows[0].id;
+        })
+        
+        //response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
+    })
+    .catch(e => {
+        return e;
+    })
 }
 
 //update method
