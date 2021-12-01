@@ -166,6 +166,7 @@ application.post('/photo', (request, response) =>{
     })
     .catch(e => {
         console.log(e);
+        //return response.json({ done: true, message: 'The customer logged in.' });
         response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add photo"}));
     })
 });
@@ -175,11 +176,13 @@ application.post('/category', (request, response) =>{
     return api.addCategory(category)
     .then(x => {
         console.log(x);
-        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
+        return response.json({ done: true,id: x.rows[0].id, message: 'category added successful.' });
+        //response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
     })
     .catch(e => {
         console.log(e);
-        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add category"}));
+        //response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add category"}));
+        return response.json({ done: false,id: null, message: 'faild to add category' });
     })
 });
 
