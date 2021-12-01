@@ -95,18 +95,18 @@ let addReview = (place_id,comment,rating) => {
 
 let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
     let sql = ``;
-    if(name!=-1)sql += `update findnearbyplaces.place set name = ${name} where id = ${place_id};`;
-    if(category_id!=-1)sql += `update findnearbyplaces.place set category_id = ${category_id} where id = ${place_id};`;
-    if(latitude!=-1)sql += `update findnearbyplaces.place set latitude = ${latitude} where id = ${place_id};`;
-    if(longitude!=-1)sql += `update findnearbyplaces.place set longitude = ${longitude} where id = ${place_id};`;
-    if(description!=-1)sql += `update findnearbyplaces.place set description = ${description} where id = ${place_id};`;
+    if(name!=-1)sql += `update findnearbyplaces.place set name = ${name} where id = ${place_id} ;`;
+    if(category_id!=-1)sql += `update findnearbyplaces.place set category_id = ${category_id} where id = ${place_id} ;`;
+    if(latitude!=-1)sql += `update findnearbyplaces.place set latitude = ${latitude} where id = ${place_id} ;`;
+    if(longitude!=-1)sql += `update findnearbyplaces.place set longitude = ${longitude} where id = ${place_id} ;`;
+    if(description!=-1)sql += `update findnearbyplaces.place set description = ${description} where id = ${place_id} ;`;
     return pool.query(sql);
 }
 
 let updateReview = (review_id,comment,rating) => {
     let sql = ``;
-    if(comment!=null)sql += `update findnearbyplaces.reviews set comment=${comment} where id=${review_id};`;
-    if(rating!=null)sql += `update findnearbyplaces.reviews set rating=${rating} where id=${review_id};`;
+    if(comment!=null)sql += `update findnearbyplaces.reviews set text = ${comment} where id = ${review_id};`;
+    if(rating!=null)sql += `update findnearbyplaces.reviews set rating = ${rating} where id = ${review_id};`;
     return pool.query(sql);
 }
 
