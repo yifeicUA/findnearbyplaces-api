@@ -52,6 +52,7 @@ let delatePhoto = (photo_id) => {
 exports.search = search;
 exports.setCustomer = setCustomer;
 exports.addPlace = addPlace;
+exports.addCategory = addCategory;
 exports.addPhoto = addPhoto;
 exports.addReview = addReview;
 exports.updatePlace = updatePlace;
