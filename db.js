@@ -94,7 +94,7 @@ let addReview = (place_id,comment,rating) => {
 //update method
 
 let updatePlace = (place_id,name,category_id,latitude,longitude,description) => {
-    let sql = '';
+    let sql = ``;
     if(name!=-1)sql += `update findnearbyplaces.place set name = ${name} where id = ${place_id};`;
     if(category_id!=-1)sql += `update findnearbyplaces.place set category_id = ${category_id} where id = ${place_id};`;
     if(latitude!=-1)sql += `update findnearbyplaces.place set latitude = ${latitude} where id = ${place_id};`;
@@ -104,14 +104,14 @@ let updatePlace = (place_id,name,category_id,latitude,longitude,description) => 
 }
 
 let updateReview = (review_id,comment,rating) => {
-    let sql = '';
+    let sql = ``;
     if(comment!=null)sql += `update findnearbyplaces.reviews set comment=${comment} where id=${review_id};`;
     if(rating!=null)sql += `update findnearbyplaces.reviews set rating=${rating} where id=${review_id};`;
     return pool.query(sql);
 }
 
 let updatePhoto = (photo_id,photo) => {
-    let sql = '';
+    let sql = ``;
     if(photo!=null)sql += `update findnearbyplaces.photo set photo=${photo} where id=${photo_id};`;
     return pool.query(sql);
 }
