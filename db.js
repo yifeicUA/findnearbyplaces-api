@@ -104,10 +104,15 @@ let updatePlace = (place_id,name,category_id,latitude,longitude,description) => 
 }
 
 let updateReview = (review_id,comment,rating) => {
-    let sql = '';
-    if(comment!=null)sql += 'update findnearbyplaces.reviews set text = '+comment+' where id = '+review_id+';';
-    if(rating!=null)sql += 'update findnearbyplaces.reviews set rating = '+rating+' where id = '+review_id+';';
-    return pool.query(sql);
+    if(comment!=null)pool.query('update findnearbyplaces.reviews set text = '+comment+' where id = '+review_id+';')
+        .catch(e => {
+            return 1;
+        })
+    if(rating!=null)pool.query('update findnearbyplaces.reviews set rating = '+rating+' where id = '+review_id+';')
+        .catch(e => {
+            return 1;
+        })
+    return 0;
 }
 
 let updatePhoto = (photo_id,photo) => {

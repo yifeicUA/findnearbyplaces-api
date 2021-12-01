@@ -228,7 +228,14 @@ application.put('/review', (request, response) =>{
     let review_id = request.body.review_id;
     let comment = request.body.comment;
     let rating = request.body.rating;
-    return api.updateReview(review_id,comment,rating)
+    //return api.updateReview(review_id,comment,rating)
+    if(api.updateReview(review_id,comment,rating)==0){
+        response.send(JSON. stringify({"done":true,"message":"review updated successful"}));
+    }
+    else{
+        response.send(JSON. stringify({"done":false,"message":"failed to update review for "+review_id}));
+    }
+    /*
     .then(x => {
         //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"review updated successful"}));
@@ -237,6 +244,7 @@ application.put('/review', (request, response) =>{
         //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"failed to update review for "+review_id+" that "+e}));
     })
+    */
 });
 
 
