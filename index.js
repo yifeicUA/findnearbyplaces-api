@@ -1,8 +1,12 @@
-
 const api = require('./api');
 //const sql_api = require('./sql_api');
 const cors = require('cors');
-const express = require('express');      
+const { v4: uuid } = require('uuid');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const express = require('express');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const application= express();
 const port = process.env.PORT || 5000;      
 
@@ -14,6 +18,50 @@ application.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
  })
+ passport.use(new LocalStrategy(
+    { usernameField: 'email' },
+    (email, password, done) => {
+        console.log('Inside local strategy callback');     
+        api.login(email, password)
+            .then(x => {
+                x.json();
+                console.log(x);
+                let user = { id: x.rows[0].id, name: x.rows[0].name, email: email };
+                console.log(user);
+                return done(null, user);
+            })
+            .catch(e => {
+                console.log('The email or password is not valid.');
+                return done(null, false, 'The email or password was invalid');
+            });
+    }
+    ));
+    
+    passport.serializeUser((user, done) => {
+        console.log('Inside serializeUser callback. User id is save to the session file store here')
+        done(null, user.id);
+    });
+    passport.deserializeUser((id, done) => {
+       console.log('Inside deserializeUser callback')
+       console.log(`The user id passport saved in the session file store is: ${id}`)
+       const user = {id: id}; 
+       done(null, user);
+    });
+ application.use(session({
+    genid: (request) => {
+       //console.log(request); 
+       console.log('Inside session middleware genid function')
+       console.log(`Request object sessionID from client: ${request.sessionID}`)
+ 
+       return uuid(); // use UUIDs for session IDs
+    },
+    store: new FileStore(),
+    secret: 'some random string',
+    resave: false,
+    saveUninitialized: true
+ }));
+ application.use(passport.initialize());
+ application.use(passport.session());
 
 application.get('/add', (request, response) =>{
     response.send('The add request resived');
@@ -62,7 +110,25 @@ application.post('/customer', (request, response) =>{
     })
 });
 
-
+application.get('/login', (req, res) => {
+    console.log('Inside GET /login callback')
+    console.log(req.sessionID)
+    res.send(`You got the login page!\n`)
+})
+application.post('/login', (request, response, next) => {
+    console.log('Inside POST /login callback')
+    passport.authenticate('local', (err, user, info) => {
+      console.log('Inside passport.authenticate() callback');
+      console.log(`req.session.passport: ${JSON.stringify(request.session.passport)}`);
+      console.log(`req.user: ${JSON.stringify(request.user)}`);
+      request.login(user, (err) => {
+        console.log('Inside req.login() callback')
+        console.log(`req.session.passport: ${JSON.stringify(request.session.passport)}`)
+        console.log(`req.user: ${JSON.stringify(request.user)}`)
+        return response.json({ done: true, message: 'The customer logged in.' });;
+      })
+    })(request, response, next);   
+ });
 
 
 

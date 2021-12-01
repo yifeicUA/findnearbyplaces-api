@@ -21,6 +21,7 @@ let search = (search_terms,user_location, radius_filter,maximum_results_to_retur
         + square(longitude - (select longitude from findnearbyplaces.place where name = ${user_location}))) <= ${radius_filter}`;
     }
     if(category_filter!=null)sql +=` and category_id = (select id from findnearbyplaces.category where name = ${category_filter})`;
+    //add a orderby for sort
     if(maximum_results_to_return!=null)sql +=` limit ${maximum_results_to_return},`;
     return pool.query(sql);
 }
@@ -36,8 +37,8 @@ let setCustomer = (email,password) => {
 }
 
 let addPlace = (name,category_id,latitude,longitude,description) => {
-    return pool.query('insert into findnearbyplaces.place(name,category_id,latitude,longitude,description) values ($1,$2,$3,$4,$5)',
-    [name,category_id,latitude,longitude,description]);
+    return pool.query('insert into findnearbyplaces.place(name,latitude,longitude,description,category_id,customer_id) values ($1,$2,$3,$4,$5,$6)',
+    [name,latitude,longitude,description,category_id,1]);
 }
 
 let addPhoto = (photo,place_id,review_id) => {
