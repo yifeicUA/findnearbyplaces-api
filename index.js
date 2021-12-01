@@ -174,6 +174,7 @@ application.post('/photo', (request, response) =>{
 application.post('/category', (request, response) =>{
     let category = request.body.name;
     return api.addCategory(category)
+    .then(x => x.json())
     .then(x => {
         console.log(x);
         return response.json({ done: true,id: x.rows[0].id, message: 'category added successful.' });
