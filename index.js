@@ -170,7 +170,18 @@ application.post('/photo', (request, response) =>{
     })
 });
 
-
+application.post('/category', (request, response) =>{
+    let category = request.body.name;
+    return api.addCategory(category)
+    .then(x => {
+        console.log(x);
+        response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"category added successful"}));
+    })
+    .catch(e => {
+        console.log(e);
+        response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add category"}));
+    })
+});
 
 
 //5. A POST method: review(place_id, comment, rating)

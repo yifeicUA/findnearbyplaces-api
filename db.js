@@ -46,7 +46,10 @@ let addPhoto = (photo,place_id,review_id) => {
     if(place_id!=null)return pool.query(`insert into findnearbyplaces.place_photo(location_id,photo_id) values (${place_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
     else if(review_id!=null)return pool.query(`insert into findnearbyplaces.review_photo(review_id,photo_id) values (${review_id},(select id from findnearbyplaces.photo where file = ${photo}))`);
 }
-
+let addCategory = (category) => {
+    return pool.query('insert into findnearbyplaces.category(name) values ($1)',
+    [category]);
+}
 let addReview = (place_id,comment,rating) => {
     return pool.query('insert into findnearbyplaces.reviews(place_id,comment,rating) values ($1,$2,$3)',
     [place_id,comment,rating]);
@@ -99,6 +102,7 @@ exports.search = search;
 exports.setCustomer = setCustomer;
 exports.addPlace = addPlace;
 exports.addPhoto = addPhoto;
+exports.addCategory = addCategory;
 exports.addReview = addReview;
 exports.updatePlace = updatePlace;
 exports.updateReview = updateReview;

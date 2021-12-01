@@ -17,6 +17,10 @@ let addPhoto = (photo,place_id,review_id) => {
     return db.addPhoto(photo,place_id,review_id);
 }
 
+let addCategory = (category) => {
+    return db.addCategory(category);
+}
+
 let addReview = (place_id,comment,rating) => {
     return db.addReview(place_id,comment,rating);
 }
