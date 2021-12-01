@@ -75,10 +75,10 @@ let addCategory = (category) => {
     })
 }
 let addReview = (place_id,comment,rating) => {
-    return pool.query('insert into findnearbyplaces.reviews(place_id,comment,rating) values ($1,$2,$3)',
-    [place_id,comment,rating])
+    return pool.query('insert into findnearbyplaces.reviews(location_id,customer_id,text,rating) values ($1,$2,$3,$4)',
+    [place_id,1,comment,rating])
     .then(x => {
-        return pool.query(`select id from findnearbyplaces.reviews where place_id = $1 and comment = $2 and rating = $3`,[place_id,comment,rating])
+        return pool.query(`select id from findnearbyplaces.reviews where location_id = $1 and text = $2 and rating = $3`,[place_id,comment,rating])
         .then(x => {
             console.log(x.rows[0].id);
             return x.rows[0].id;
