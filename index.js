@@ -141,11 +141,11 @@ application.post('/place', (request, response) =>{
     let description = request.body.description;
     return api.addPlace(name,category_id,latitude,longitude,description)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"place added successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add place"}));
     })
 });
@@ -161,11 +161,11 @@ application.post('/photo', (request, response) =>{
     let review_id = request.body.review_id;
     return api.addPhoto(photo,place_id,review_id)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"photo added successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         //return response.json({ done: true, message: 'The customer logged in.' });
         response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add photo"}));
     })
@@ -174,7 +174,6 @@ application.post('/photo', (request, response) =>{
 application.post('/category', (request, response) =>{
     let category = request.body.name;
     return api.addCategory(category)
-    .then(x => x.json())
     .then(x => {
         console.log(x);
         return response.json({ done: true,id: x.rows[0].id, message: 'category added successful.' });
@@ -195,11 +194,11 @@ application.post('/review', (request, response) =>{
     let rating = request.body.rating;
     return api.addReview(place_id,comment,rating)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"id": x.rows[0].id,"message":"review added successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"id":null,"message":"faild to add review"}));
     })
 });
@@ -215,11 +214,11 @@ application.put('/place', (request, response) =>{
     let description = request.body.description;
     return api.updatePlace(place_id,name,category_id,latitude,longitude,description)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"place updated successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to update place"}));
     })
 });
@@ -231,11 +230,11 @@ application.put('/review', (request, response) =>{
     let rating = request.body.rating;
     return api.updateReview(review_id,comment,rating)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"review updated successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to update review"}));
     })
 });
@@ -247,11 +246,11 @@ application.put('/photo', (request, response) =>{
     let photo = request.body.photo;
     return api.updatePhoto(photo_id,photo)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"photo updated successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to update photo"}));
     })
 });
@@ -261,11 +260,11 @@ application.delete('/place', (request, response) =>{
     let place_id = request.body.place_id;
     return api.delatePlace(place_id)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"place delete successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to delete place"}));
     })
 });
@@ -275,11 +274,11 @@ application.delete('/review', (request, response) =>{
     let review_id = request.body.review_id;
     return api.delateReview(review_id)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"review delete successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to delete review"}));
     })
 });
@@ -289,11 +288,11 @@ application.delete('/photo', (request, response) =>{
     let photo_id = request.body.photo_id;
     return api.delatePhoto(photo_id)
     .then(x => {
-        console.log(x);
+        //console.log(x);
         response.send(JSON. stringify({"done":true,"message":"photo delete successful"}));
     })
     .catch(e => {
-        console.log(e);
+        //console.log(e);
         response.send(JSON. stringify({"done":false,"message":"faild to delete photo"}));
     })
 });
