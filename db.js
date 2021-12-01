@@ -105,14 +105,14 @@ let updatePlace = (place_id,name,category_id,latitude,longitude,description) => 
 
 let updateReview = (review_id,comment,rating) => {
     let sql = '';
-    if(comment!=null)sql += `update findnearbyplaces.reviews set comment=${comment} where review_id=${review_id};`;
-    if(rating!=null)sql += `update findnearbyplaces.reviews set rating=${rating} where review_id=${review_id};`;
+    if(comment!=null)sql += `update findnearbyplaces.reviews set comment=${comment} where id=${review_id};`;
+    if(rating!=null)sql += `update findnearbyplaces.reviews set rating=${rating} where id=${review_id};`;
     return pool.query(sql);
 }
 
 let updatePhoto = (photo_id,photo) => {
     let sql = '';
-    if(photo!=null)sql += `update findnearbyplaces.photo set photo=${photo} where review_id=${photo_id};`;
+    if(photo!=null)sql += `update findnearbyplaces.photo set photo=${photo} where id=${photo_id};`;
     return pool.query(sql);
 }
 
@@ -120,7 +120,7 @@ let updatePhoto = (photo_id,photo) => {
 //delete method
 
 let delatePlace = (place_id) => {
-    return pool.query('delete from findnearbyplaces.place where id=$1',
+    return pool.query('delete from findnearbyplaces.place where id = $1',
     [place_id]);
 }
 
