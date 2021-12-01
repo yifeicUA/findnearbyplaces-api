@@ -281,7 +281,7 @@ application.delete('/review/:review_id', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"failed to delete review"}));
+        response.send(JSON. stringify({"done":false,"message":"failed to delete review for "+review_id+" that "+e}));
     })
 });
 
