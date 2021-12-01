@@ -235,7 +235,7 @@ application.put('/review', (request, response) =>{
     })
     .catch(e => {
         //console.log(e);
-        response.send(JSON. stringify({"done":false,"message":"failed to update review"}));
+        response.send(JSON. stringify({"done":false,"message":"failed to update review for "+review_id+" that "+e}));
     })
 });
 
